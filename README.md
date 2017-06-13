@@ -29,6 +29,16 @@ Some stats aren't forwarded, specifically `MAXMEM(k)`, `MAXMEM(%)`, `VBDS`, and
 `VBD_OO`. This is because in my application, they're constant and fixed, so I 
 don't feel the need to bother. 
 
+Due to the limitations of the statsd message format, some modifications are done to the 
+string keys (parenthesis in the column names break things). Additionally, some cleaning
+is done to your VM names, though this is probably less thorough then it needs to be to 
+handle arbitrary VM names. Primarily, literal dots (`.`) in the VM names are transformed to
+underscores (`_`), because otherwise they wind up being interpreted as components of the
+statsd gauge path. Other special characters are not currently handled, their presence
+will probably cause statsd to do interesting or strange things. It is probably not
+a good idea to use this tool in a context where the VM names can be controlled by a
+untrusted user.
+
 Have Fun!
 
 License: BSD

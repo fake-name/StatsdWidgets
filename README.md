@@ -8,7 +8,7 @@ such thing exists (there is something in libvirt, but I'm not using libvirt).
 
 Dependencies:
 
- - statsd [1]
+ - [statsd]
 
 Setup:
 
@@ -33,4 +33,4 @@ Have Fun!
 
 License: BSD
 
-[1]: https://pypi.python.org/pypi/statsd/
+[statsd]: https://pypi.python.org/pypi/statsd/

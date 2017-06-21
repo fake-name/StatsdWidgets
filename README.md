@@ -27,6 +27,10 @@ Some stats aren't forwarded, specifically `MAXMEM(k)`, `MAXMEM(%)`, `VBDS`, and
 `VBD_OO`. This is because in my application, they're constant and fixed, so I 
 don't feel the need to bother. 
 
+The end result is some totally awesome graphs:
+
+![alt text](https://raw.githubusercontent.com/fake-name/XenStats/master/XenVMs.png "Grafana Graphs")
+
 Have Fun!
 
 License: BSD

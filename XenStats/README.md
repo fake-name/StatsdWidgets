@@ -41,7 +41,7 @@ untrusted user.
 
 The end result is some totally awesome graphs:
 
-![alt text](https://raw.githubusercontent.com/fake-name/XenStats/master/XenVMs.png "Grafana Graphs")
+![alt text](https://raw.githubusercontent.com/fake-name/StatsdWidgets/master/XenStats/XenVMs.png "Grafana Graphs")
 
 Have Fun!
 

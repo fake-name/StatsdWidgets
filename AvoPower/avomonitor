@@ -12,7 +12,7 @@ SCRIPT=python3\ /usr/local/bin/avocent_power_mon.py
 RUNAS=durr
 
 PIDFILE=/var/run/avocent_power_poller.pid
-LOGFILE=/var/log/avocent_power_poller.log
+LOGFILE=/tmp/avocent_power_poller.log
 
 start() {
   # set -e
@@ -21,6 +21,8 @@ start() {
     return 1
   fi
   echo 'Starting service…' >&2
+  touch $LOGFILE
+  chown $RUNAS:$RUNAS $LOGFILE
   local CMD="$SCRIPT &> \"$LOGFILE\" & echo \$!"
   echo $?
   su -c "$CMD" $RUNAS > "$PIDFILE"

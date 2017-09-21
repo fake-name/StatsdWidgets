@@ -1,29 +1,30 @@
-## XenMonitor
+## AvoMonitor
 
-This is a rather silly tool that processes the output of the `xentop` command, 
-and sends the resulting performance information to a statsd compatible endpoint.
-
-Ideally, I'd much prefer a SNMP based system, but as far as I can find, no
-such thing exists (there is something in libvirt, but I'm not using libvirt).
+This is a rather silly tool to poll a Avocent PM3000 (and probably PM2000) PDU, 
+and forward the resulting power consumption metrics to a statsd instance.
 
 Dependencies:
 
  - [statsd]
+ - [pysnmp]
 
 Setup:
 
- - The user the daemon executes as *must* be able to execute `sudo xentop`
- *without* a password. 
- - Edit `xen_monitor.py`, and update `STATSD_HOST_ADDRESS` with the address
- of your statsd aggregator address.
- - Place the `xen_monitor.py` somewhere. Currently, the init file in the
- repository expects `/usr/local/bin/xen_monitor.py`, but you can place it
+ - Edit `avocent_power_mon.py`, and update the settings:
+     - `STATSD_HOST_ADDRESS` is the address of your statsd aggregator address.
+     - `PDU_DEVICE_ADDRESS` is the IP of your avocent PDU.
+     - `SNMP_COMMUNITY_STRING` is your SNMP community string
+ - Place the `avocent_power_mon.py` somewhere. Currently, the init file in the
+ repository expects `/usr/local/bin/avocent_power_mon.py`, but you can place it
  wherever, as long as you update the init file.
- - Place the init file in `/etc/init.d/xenmonitor`. You will probably need
+ - Place the init file in `/etc/init.d/avomonitor`. You will probably need
  to update the `RUNAS` variable in this file (unless you too use the username
  `durr` on your linux box).
- - `sudo update-rc.d xenmonitor enable` to enable the service. `sudo service 
- start xenmonitor` to start immediately.
+ - With a Sane Init system:
+     - `sudo update-rc.d avomonitor enable` to enable the service. `sudo service 
+       start avomonitor` to start immediately.
+ - Or SystemD:
+     - `sudo systemctl daemon-reload` to rescan init files
 
 Some stats aren't forwarded, specifically `MAXMEM(k)`, `MAXMEM(%)`, `VBDS`, and 
 `VBD_OO`. This is because in my application, they're constant and fixed, so I 
@@ -48,3 +49,4 @@ Have Fun!
 License: BSD
 
 [statsd]: https://pypi.python.org/pypi/statsd/
+[pysnmp]: http://pysnmp.sourceforge.net/

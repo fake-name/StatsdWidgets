@@ -1,6 +1,7 @@
 import logging
 import asyncio
 import json
+import os.path
 import statsd
 
 from hbmqtt.client import MQTTClient, ClientException
@@ -26,7 +27,8 @@ class PowerParser():
 
 	def __load_settings(self):
 
-		with open("conf.json") as fp:
+		cpath = os.path.join(os.path.dirname(__file__), "mqtt_config.json")
+		with open(cpath) as fp:
 			settings_raw = fp.read()
 
 		conf = json.loads(settings_raw)
@@ -65,10 +67,10 @@ class PowerParser():
 			gaugeprefix = params['host'] + "."
 			outpipe.gauge(gaugeprefix + "amps",           float(params['current']))
 			outpipe.gauge(gaugeprefix + "voltage",        float(params['voltage']))
-			outpipe.gauge(gaugeprefix + "real power",     float(params['power']))
-			outpipe.gauge(gaugeprefix + "reactive power", float(params['reactive']))
-			outpipe.gauge(gaugeprefix + "apparent power", float(params['apparent']))
-			outpipe.gauge(gaugeprefix + "power factor",   float(params['factor']) / 100.0)
+			outpipe.gauge(gaugeprefix + "real-power",     float(params['power']))
+			outpipe.gauge(gaugeprefix + "reactive-power", float(params['reactive']))
+			outpipe.gauge(gaugeprefix + "apparent-power", float(params['apparent']))
+			outpipe.gauge(gaugeprefix + "power-factor",   float(params['factor']) / 100.0)
 
 
 	@asyncio.coroutine
